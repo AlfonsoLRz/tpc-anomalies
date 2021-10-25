@@ -66,8 +66,8 @@ public:
 	void setColorIndex(uint16_t* colorBuffer, unsigned size);
 
 	/**
-	*	@brief Defines the content of voxel's thermal values.
+	*	@brief Defines the content of voxel's float values.
 	*/
-	void setThermalColor(uint16_t* colorBuffer, unsigned size, std::vector<float>* thermalBuffer);
+	void setFloatBuffer(uint16_t* colorBuffer, unsigned size, std::vector<float>* thermalBuffer, RendEnum::VBOTypes vboType);
 };
 

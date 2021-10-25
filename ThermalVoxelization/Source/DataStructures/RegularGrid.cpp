@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "RegularGrid.h"
 
+#include "Graphics/Application/Renderer.h"
+#include "Graphics/Application/RenderingParameters.h"
 #include "Graphics/Core/OpenGLUtilities.h"
 #include "Graphics/Core/ShaderList.h"
 #include "tinyply/tinyply.h"
@@ -235,6 +237,7 @@ void RegularGrid::fillNoiseBuffer(std::vector<float>& noiseBuffer, unsigned numS
 void RegularGrid::locateAnomalies()
 {
 	ComputeShader* shader = ShaderList::getInstance()->getComputeShader(RendEnum::LOCATE_THERMAL_ANOMALIES_SHADER);
+	RenderingParameters* rendParams = Renderer::getInstance()->getRenderingParameters();
 
 	// Input data
 	uvec3 numDivs = this->getNumSubdivisions();
@@ -242,28 +245,26 @@ void RegularGrid::locateAnomalies()
 	unsigned numGroups = ComputeShader::getNumGroups(numCells);
 
 	// Input data
-	std::vector<ivec2> thermalAggregation(numCells);
-	std::fill(thermalAggregation.begin(), thermalAggregation.end(), ivec2(0));
-
-	const GLuint gridSSBO = ComputeShader::setReadBuffer(&_grid[0], numCells, GL_DYNAMIC_DRAW);
+	const GLuint gridSSBO = ComputeShader::setReadBuffer(_grid, GL_STATIC_DRAW);
 	const GLuint thermalSSBO = ComputeShader::setReadBuffer(_thermal, GL_STATIC_DRAW);
 	const GLuint statSSBO = ComputeShader::setWriteBuffer(vec2(), numCells, GL_DYNAMIC_DRAW);
-	const GLuint localPeakSSBO = ComputeShader::setWriteBuffer(GLuint(), numCells, GL_DYNAMIC_DRAW);
+	const GLuint localPeakSSBO = ComputeShader::setWriteBuffer(float(), numCells, GL_DYNAMIC_DRAW);
 
-	shader->bindBuffers(std::vector<GLuint>{ thermalSSBO, gridSSBO, statSSBO, localPeakSSBO });
+	shader->bindBuffers(std::vector<GLuint>{ gridSSBO, thermalSSBO, statSSBO, localPeakSSBO });
 	shader->use();
 	shader->setUniform("gridDims", numDivs);
-	shader->execute(numDivs.x, numDivs.y, numDivs.z, 1, 1, 1);
+	shader->setUniform("neighbors", GLint(rendParams->_gridNeighbors));
+	shader->setUniform("stdFactor", rendParams->_stdFactor);
+	shader->execute(numGroups, 1, 1, ComputeShader::getMaxGroupSize(), 1, 1);
 
-	vec2* statData = ComputeShader::readData(statSSBO, vec2());
-	std::vector<vec2> stats = std::vector<vec2>(statData, statData + numCells);
+	float* peakData = ComputeShader::readData(localPeakSSBO, float());
+	_localPeak = std::vector<float>(peakData, peakData + numCells);
 
-	//ivec2* aggregationData = ComputeShader::readData(thermalAggregationSSBO, ivec2());
 	//for (int cellIdx = 0; cellIdx < numCells; ++cellIdx)
 	//{
-	//	if (aggregationData[cellIdx].y)
+	//	if (_grid[cellIdx] != VOXEL_EMPTY)
 	//	{
-	//		_thermal[cellIdx] = (aggregationData[cellIdx].x / 1000.0f) / aggregationData[cellIdx].y;
+	//		std::cout << stats[cellIdx].x << " " << stats[cellIdx].y << std::endl;
 	//	}
 	//}
 
@@ -369,6 +370,11 @@ bool RegularGrid::isEmpty(int x, int y, int z) const
 size_t RegularGrid::length() const
 {
 	return _numDivs.x * _numDivs.y * _numDivs.z;
+}
+
+std::vector<float>* RegularGrid::localPeak()
+{
+	return &_localPeak;
 }
 
 void RegularGrid::set(int x, int y, int z, uint8_t i)

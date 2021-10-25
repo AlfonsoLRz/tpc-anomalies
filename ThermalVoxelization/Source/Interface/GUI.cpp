@@ -125,12 +125,16 @@ void GUI::showGridSettings()
 		{
 			_scene->rebuildGrid(_renderingParams->_gridSubdivisions);
 		}
+		ImGui::Checkbox("Fill columns", &_renderingParams->_fillUnderVoxels);
+
+		this->leaveSpace(3); ImGui::Text("Thermal Anomalies"); ImGui::Separator(); this->leaveSpace(2);
+		ImGui::SliderInt("Grid Neighbors", &_renderingParams->_gridNeighbors, 3, 50);
+		ImGui::SliderFloat("Std Factor", &_renderingParams->_stdFactor, 1.0f, 20.0f);
 
 		this->leaveSpace(3); ImGui::Text("Execution Settings"); ImGui::Separator(); this->leaveSpace(2);
 		ImGui::Checkbox("Use GPU", &_renderingParams->_launchGridGPU); ImGui::SameLine(0, 20);
 
 		this->leaveSpace(3); ImGui::Text("Save Result"); ImGui::Separator(); this->leaveSpace(2);
-		ImGui::Checkbox("Fill columns", &_renderingParams->_fillUnderVoxels);
 		if (ImGui::Button("Export Fragments"))
 		{
 			_scene->exportGrid(_renderingParams->_fillUnderVoxels);
@@ -177,18 +181,18 @@ void GUI::showRenderingSettings()
 					ImGui::SameLine(30, 0);
 					ImGui::Checkbox("Screen Space Ambient Occlusion", &_renderingParams->_ambientOcclusion);
 
+					if (_renderingParams->_visualizationMode == CGAppEnum::VIS_TRIANGLES)
+					{
+						ImGui::NewLine();
+						ImGui::SameLine(30, 0);
+						ImGui::Checkbox("Render Thermal Values", &_renderingParams->_renderThermals);
+						ImGui::Checkbox("Render Anomalies", &_renderingParams->_renderAnomalies);
+					}
+
 					const char* visualizationTitles[] = { "Points", "Lines", "Triangles", "All" };
 					ImGui::NewLine();
 					ImGui::SameLine(30, 0);
 					ImGui::Combo("Visualization", &_renderingParams->_visualizationMode, visualizationTitles, IM_ARRAYSIZE(visualizationTitles));
-
-					if (_renderingParams->_visualizationMode == CGAppEnum::VIS_TRIANGLES)
-					{
-						this->leaveSpace(1);
-						ImGui::NewLine();
-						ImGui::SameLine(30, 0);
-						ImGui::Checkbox("Render Thermal Values", &_renderingParams->_renderThermals);
-					}
 				}
 
 				ImGui::EndTabItem();

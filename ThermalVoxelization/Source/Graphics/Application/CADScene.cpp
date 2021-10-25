@@ -46,13 +46,14 @@ void CADScene::rebuildGrid(ivec3 subdivisions)
 	delete _meshGrid;
 	_meshGrid = new RegularGrid(_sceneGroup[0]->getAABB(), subdivisions);
 	_meshGrid->fill(_pointCloud->getPoints(), _pointCloud->getTemperature());
-	//_meshGrid->fillUnderCloud();
+	if (Renderer::getInstance()->getRenderingParameters()->_fillUnderVoxels) _meshGrid->fillUnderCloud();
 	_meshGrid->getAABBs(aabbs);
 	_meshGrid->locateAnomalies();
 
 	_aabbRenderer->load(aabbs);
 	_aabbRenderer->homogenize();
-	_aabbRenderer->setThermalColor(_meshGrid->data(), _meshGrid->getNumSubdivisions().x * _meshGrid->getNumSubdivisions().y * _meshGrid->getNumSubdivisions().z, _meshGrid->thermalData());
+	_aabbRenderer->setFloatBuffer(_meshGrid->data(), _meshGrid->getNumSubdivisions().x * _meshGrid->getNumSubdivisions().y * _meshGrid->getNumSubdivisions().z, _meshGrid->thermalData(), RendEnum::VBO_THERMAL_COLOR);
+	_aabbRenderer->setFloatBuffer(_meshGrid->data(), _meshGrid->getNumSubdivisions().x * _meshGrid->getNumSubdivisions().y * _meshGrid->getNumSubdivisions().z, _meshGrid->localPeak(), RendEnum::VBO_LOCAL_PEAK_COLOR);
 }
 
 void CADScene::render(const mat4& mModel, RenderingParameters* rendParams)
@@ -399,6 +400,7 @@ void CADScene::drawSceneAsTriangles(RenderingShader* shader, RendEnum::RendShade
 	{
 		if (rendParams->_renderVoxelizedMesh)
 		{
+			shader->setUniform("outlierColouring", GLuint(rendParams->_renderAnomalies));
 			shader->setUniform("thermalColouring", GLuint(rendParams->_renderThermals));
 			_aabbRenderer->drawAsTriangles(shader, shaderType, *matrix);
 		}

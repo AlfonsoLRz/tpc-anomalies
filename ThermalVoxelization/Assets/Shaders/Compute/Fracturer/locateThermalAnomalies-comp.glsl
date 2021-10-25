@@ -5,27 +5,76 @@
 
 layout(local_size_variable) in;
 
+#define MIN 1
+#define MAX 2
+
 layout(std430, binding = 0) buffer GridBuffer		{ uint16_t		grid[]; };
 layout(std430, binding = 1) buffer ThermalBuffer	{ float			thermalValues[]; };
 layout(std430, binding = 2) buffer StatBuffer		{ vec2			stat[]; };
-layout(std430, binding = 3) buffer PeakBuffer		{ uint			peak[]; };
+layout(std430, binding = 3) buffer PeakBuffer		{ float			peak[]; };
 
 #include <Assets/Shaders/Compute/Fracturer/voxel.glsl>
 
-uniform vec3 aabbMin;
+uniform int neighbors;
+uniform uint numCells;
+uniform float stdFactor;
+
+bool isValid(ivec3 xyz)
+{
+	return xyz.x >= 0 && xyz.x < gridDims.x && xyz.y >= 0 && xyz.y < gridDims.y && xyz.z >= 0 && xyz.z < gridDims.z && grid[getPositionIndex(xyz)] != VOXEL_EMPTY;
+}
 
 void main()
 {
-	const uvec3 index = gl_GlobalInvocationID.xyz;
+	const uint index = gl_GlobalInvocationID.x;
+	if (index >= gridDims.x * gridDims.y * gridDims.z) return;
 
-	stat[0] = index.zy;
+	float avg = .0f, std = .0f;
+	uint avgNeighbors = 0;
+	ivec3 index3 = ivec3(getPosition(index));
 
-	//vec3 point = points[index].xyz;
-	//int thermalValue = floatBitsToInt(thermalValues[index]);
-	//uvec3 gridIndex = getPositionIndex(point);
-	//uint gridIndexUint = getPositionIndex(gridIndex);
+	stat[index] = vec2(.0f);
+	peak[index] = 0;
 
-	//grid[gridIndexUint] = VOXEL_FREE;
-	//atomicAdd(aggregation[gridIndexUint].x, int(thermalValues[index] * 10000.0f));
-	//atomicAdd(aggregation[gridIndexUint].y, 1);
+	if (grid[index] == VOXEL_EMPTY) return;
+
+	for (int x = -neighbors; x < neighbors; ++x)
+	{
+		for (int y = -neighbors; y < neighbors; ++y)
+		{
+			for (int z = -neighbors; z < neighbors; ++z)
+			{
+				ivec3 neighborIdx = index3 + ivec3(x, y, z);
+
+				if (isValid(neighborIdx))
+				{
+					avg += thermalValues[getPositionIndex(neighborIdx)];
+					++avgNeighbors;
+				}
+			}
+		}
+	}
+
+	stat[index].x = avg / float(max(1, avgNeighbors));
+
+	for (int x = -neighbors; x < neighbors; ++x)
+	{
+		for (int y = -neighbors; y < neighbors; ++y)
+		{
+			for (int z = -neighbors; z < neighbors; ++z)
+			{
+				ivec3 neighborIdx = index3 + ivec3(x, y, z);
+
+				if (isValid(neighborIdx))
+				{
+					std += abs(stat[index].x - thermalValues[getPositionIndex(neighborIdx)]);
+				}
+			}
+		}
+	}
+
+	stat[index].y = std / float(max(1, avgNeighbors));
+
+	if (thermalValues[index] >= stat[index].x + stdFactor * stat[index].y) peak[index] = MAX;
+	if (thermalValues[index] <= stat[index].x - stdFactor * stat[index].y) peak[index] = MIN;
 }

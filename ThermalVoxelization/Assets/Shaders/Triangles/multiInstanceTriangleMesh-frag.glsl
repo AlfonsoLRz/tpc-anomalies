@@ -23,6 +23,7 @@ in vec3 viewDir;
 
 // ----------- Point cloud colouring -----------
 uniform uint thermalColouring;
+uniform uint outlierColouring;
 
 // ----------- Materials ------------
 uniform sampler2D texKadSampler;
@@ -329,7 +330,7 @@ void noShadow(out float shadowDiffuseFactor, out float shadowSpecFactor)
 
 void main()
 {
-	const vec4 kadColor = thermalColouring != 1 ? (colorIndex != VOXEL_EMPTY ? vec4(HSVtoRGB(getHueValue(uint(colorIndex)), .99f, .99f), 1.0f) : getKad()) : vec4(vec3(colorIndex), 1.0f);
+	const vec4 kadColor = outlierColouring == 1 ? vec4(HSVtoRGB(getHueValue(uint(colorIndex)), .99f, .99f), 1.0f) : (thermalColouring != 1 ? (colorIndex != VOXEL_EMPTY ? vec4(HSVtoRGB(getHueValue(uint(colorIndex)), .99f, .99f), 1.0f) : getKad()) : vec4(vec3(colorIndex), 1.0f));
 	const vec4 fragKad = semiTransparentUniform(kadColor);
 	const vec4 fragKs = getKs();
 	const vec3 fragNormal = displacementUniform();

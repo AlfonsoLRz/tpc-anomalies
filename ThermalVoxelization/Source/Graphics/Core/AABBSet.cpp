@@ -25,6 +25,7 @@ bool AABBSet::load(const mat4& modelMatrix)
 		vao->defineMultiInstancingVBO(RendEnum::VBO_SCALE, vec3(), .0f, GL_FLOAT);
 		vao->defineMultiInstancingVBO(RendEnum::VBO_INDEX, float(), .0f, GL_FLOAT);
 		vao->defineMultiInstancingVBO(RendEnum::VBO_THERMAL_COLOR, float(), .0f, GL_FLOAT);
+		vao->defineMultiInstancingVBO(RendEnum::VBO_LOCAL_PEAK_COLOR, float(), .0f, GL_FLOAT);
 		
 		_loaded = true;
 	}
@@ -77,7 +78,7 @@ void AABBSet::setColorIndex(uint16_t* colorBuffer, unsigned size)
 	_modelComp[0]->_vao->setVBOData(RendEnum::VBO_INDEX, colorIndex);
 }
 
-void AABBSet::setThermalColor(uint16_t* colorBuffer, unsigned size, std::vector<float>* thermalBuffer)
+void AABBSet::setFloatBuffer(uint16_t* colorBuffer, unsigned size, std::vector<float>* thermalBuffer, RendEnum::VBOTypes vboType)
 {
 	std::vector<float> thermalColor;
 
@@ -89,7 +90,7 @@ void AABBSet::setThermalColor(uint16_t* colorBuffer, unsigned size, std::vector<
 		}
 	}
 
-	_modelComp[0]->_vao->setVBOData(RendEnum::VBO_THERMAL_COLOR, thermalColor);
+	_modelComp[0]->_vao->setVBOData(vboType, thermalColor);
 }
 
 // [Protected methods]

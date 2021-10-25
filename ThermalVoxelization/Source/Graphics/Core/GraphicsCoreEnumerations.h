@@ -34,7 +34,8 @@ struct RendEnum
 		VBO_INDEX,
 		VBO_CLUSTER_ID,
 		VBO_COLOR_01,
-		VBO_THERMAL_COLOR
+		VBO_THERMAL_COLOR,
+		VBO_LOCAL_PEAK_COLOR
 	};
 
 	/**
@@ -45,7 +46,7 @@ struct RendEnum
 	/**
 	*	@return Number of VBO different types.
 	*/
-	const static GLsizei numVBOTypes() { return VBO_THERMAL_COLOR + 1; }
+	const static GLsizei numVBOTypes() { return VBO_LOCAL_PEAK_COLOR + 1; }
 
 	/// [Shaders]
 

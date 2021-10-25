@@ -12,6 +12,7 @@ layout(location = 4) in vec3		vOffset;
 layout(location = 5) in vec3		vScale;
 layout(location = 7) in float		vColorIndex;
 layout(location = 10) in float		vThermalColor;
+layout(location = 11) in float		vOutlierIndex;
 
 
 // ------------- Light types ----------------
@@ -24,6 +25,7 @@ subroutine uniform displacementType displacementUniform;
 
 // Point cloud colouring 
 uniform uint thermalColouring;
+uniform uint outlierColouring;
 
 // Lighting
 uniform vec3 lightPosition;
@@ -137,7 +139,7 @@ void main()
 	normal = vec3(mModelView * transformationMatrix * vec4(vNormal, 0.0f));
 	shadowCoord = mShadow * transformationMatrix * vec4(vPosition, 1.0f);
 	textCoord = vTextCoord;
-	colorIndex = thermalColouring == 0 ? vColorIndex : vThermalColor;
+	colorIndex = outlierColouring == 0 ? (thermalColouring == 0 ? vColorIndex : vThermalColor) : vOutlierIndex;
 
 	const mat3 TBN = displacementUniform();
 	lightUniform(TBN);

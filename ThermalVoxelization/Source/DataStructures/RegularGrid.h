@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Geometry/3D/AABB.h"
+#include "Graphics/Core/FractureParameters.h"
 #include "Graphics/Core/Image.h"
 #include "Graphics/Core/Model3D.h"
 #include "Graphics/Core/Texture.h"
@@ -21,6 +22,7 @@ class RegularGrid
 {   
 protected:
 	std::vector<uint16_t>	_grid;									//!< Color index of regular grid
+	std::vector<float>		_localPeak;								//!< Maximu/minimum indicator
 	std::vector<float>		_thermal;								//!< Thermal grayscale representation per voxel
 
 	AABB					_aabb;									//!< Bounding box of the scene
@@ -185,6 +187,11 @@ public:
     *   @return size.x * size.y * size.z
     */
     size_t length() const;
+
+	/**
+	*	@return Pointer to vector indicating local maximum/minimum/none.
+	*/
+	std::vector<float>* localPeak();
 
     /**
 	*   Set voxel at position [x, y, z].

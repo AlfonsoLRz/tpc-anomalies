@@ -36,6 +36,8 @@ public:
 	int								_visualizationMode;						//!< Only triangle mesh is defined here
 	
 	// Point cloud	
+	int								_gridNeighbors;							//!< 
+	bool							_renderAnomalies;						//!<
 	bool							_renderThermals;						//!< 
 	float							_scenePointSize;						//!< Size of points in a cloud
 	vec3							_scenePointCloudColor;					//!< Color of point cloud which shows all the vertices
@@ -62,6 +64,7 @@ public:
 	bool							_fillUnderVoxels;						//!< Fills grid under occupied voxels
 	ivec3							_gridSubdivisions;						//!< Subdivisions of regular grid
 	bool							_launchGridGPU;							//!< Launchs grid subdivision in GPU
+	float							_stdFactor;								//!< Multiplier to detect anomalies regarding a grid surroundings
 
 public:
 	/**
@@ -96,9 +99,13 @@ public:
 		_showBVH(false),
 		_showTriangleMesh(true),
 
-		_fillUnderVoxels(true),
+		_fillUnderVoxels(false),
+		_gridNeighbors(5),
 		_gridSubdivisions(180),
-		_launchGridGPU(true)
+		_launchGridGPU(true),
+		_renderAnomalies(false),
+		_renderThermals(true),
+		_stdFactor(6.0f)
 	{
 	}
 };
