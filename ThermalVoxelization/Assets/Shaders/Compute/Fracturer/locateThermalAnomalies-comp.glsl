@@ -5,7 +5,7 @@
 
 layout(local_size_variable) in;
 
-#define MIN 1
+#define MIN 0
 #define MAX 2
 
 layout(std430, binding = 0) buffer GridBuffer		{ uint16_t		grid[]; };

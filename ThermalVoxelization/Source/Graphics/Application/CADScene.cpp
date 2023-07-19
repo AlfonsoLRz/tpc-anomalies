@@ -18,7 +18,7 @@ const std::string CADScene::SCENE_SETTINGS_FOLDER = "Assets/Scene/Settings/Basem
 const std::string CADScene::SCENE_CAMERA_FILE = "Camera.txt";
 const std::string CADScene::SCENE_LIGHTS_FILE = "Lights.txt";
 
-const std::string CADScene::MESH_1_PATH = "Assets/Models/Jar01/Jar01";
+const std::string CADScene::MESH_1_PATH = "Assets/Models/PointCloud/ThermalPointCloud";
 
 // [Public methods]
 

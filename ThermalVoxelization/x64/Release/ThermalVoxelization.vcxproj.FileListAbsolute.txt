@@ -1,0 +1,1 @@
+D:\Github\ThermalPCArchaeologicalAnalysis\ThermalVoxelization\x64\Release\ThermalVoxelization.vcxproj.CopyComplete

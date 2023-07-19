@@ -13,7 +13,7 @@
 const std::vector<float> InputManager::MOVEMENT_SPEED = getMovementSpeed();
 
 const vec2	InputManager::CURSOR_POS = vec2(-1.0f, -1.0f);					//!< Default cursor position, just to be ignored
-const float InputManager::MOVEMENT_MULTIPLIER = 0.1f;					
+const float InputManager::MOVEMENT_MULTIPLIER = 0.5f;					
 const float InputManager::MOVEMENT_SPEED_UP = 1.0f;						
 
 const int InputManager::ANIM_SCENE = GLFW_KEY_I;
