@@ -26,7 +26,7 @@ The published project is able to recalculate the voxelization and calculate new 
 The following image shows a screenshot of the Graphical User Interface (GUI) that enable setting all these parameters.
 
 <p align="center">
-    <img src="readme_assets/GUI.png" width=800/></br>
+    <img src="readme_assets/GUI.PNG" width=800/></br>
     <em>GUI for configuring the regular grid dimensions and search of thermal anomalies.</em>
 </p>
 
@@ -45,6 +45,6 @@ The seek for thermal anomalies starts by indexing the point cloud into a regular
 Finally, once the $\sigma$ and number of neighbors are configured, voxels can be rendered according to whether they have been identified as outliers or not.
 
 <p align="center">
-    <img src="readme_assets/Anomalies.png" width=800 /></br>
+    <img src="readme_assets/Anomalies.PNG" width=800 /></br>
     <em>Anomalies detected over the previous voxelization.</em>
 </p>
