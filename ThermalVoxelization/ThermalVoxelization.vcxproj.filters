@@ -235,12 +235,6 @@
     <Filter Include="Archivos de recursos\Shaders\Compute\Collision">
       <UniqueIdentifier>{e5dcca56-e62a-4a5e-8689-e2f58a220dc2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de encabezado\Fracturer">
-      <UniqueIdentifier>{e23957b5-2937-44b3-a592-f6453159f58e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\Fracturer">
-      <UniqueIdentifier>{090440b4-612a-40ab-948e-3d39a51887d0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Archivos de recursos\Shaders\Compute\Fracturer">
       <UniqueIdentifier>{a65b06a4-71d7-4b07-be85-9859e643d62a}</UniqueIdentifier>
     </Filter>
@@ -387,9 +381,6 @@
     <ClInclude Include="Source\Geometry\3D\TriangleMesh.h">
       <Filter>Archivos de encabezado\Geometry\3D</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Graphics\Core\PlanarSurface.h">
-      <Filter>Archivos de encabezado\Graphics\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Geometry\3D\Plane.h">
       <Filter>Archivos de encabezado\Geometry\3D</Filter>
     </ClInclude>
@@ -465,11 +456,8 @@
     <ClInclude Include="Source\Geometry\Animation\LinearInterpolation.h">
       <Filter>Archivos de encabezado\Geometry\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Graphics\Application\CADScene.h">
+    <ClInclude Include="Source\Graphics\Application\PointCloudScene.h">
       <Filter>Archivos de encabezado\Graphics\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\Core\CADModel.h">
-      <Filter>Archivos de encabezado\Graphics\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\Graphics\Core\SSAOFBO.h">
       <Filter>Archivos de encabezado\Graphics\Core\FBO</Filter>
@@ -516,34 +504,13 @@
     <ClInclude Include="Libraries\imgizmo\ImZoomSlider.h">
       <Filter>Archivos de encabezado\ImportedLibraries\imguizmo</Filter>
     </ClInclude>
-    <ClInclude Include="Source\DataStructures\Octree.h">
-      <Filter>Archivos de encabezado\DataStructures</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Graphics\Core\AABBSet.h">
       <Filter>Archivos de encabezado\Graphics\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\DataStructures\RegularGrid.h">
       <Filter>Archivos de encabezado\DataStructures</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Fracturer\FloodFracturer.h">
-      <Filter>Archivos de encabezado\Fracturer</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Fracturer\Fracturer.h">
-      <Filter>Archivos de encabezado\Fracturer</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Fracturer\NaiveFracturer.h">
-      <Filter>Archivos de encabezado\Fracturer</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Fracturer\Seeder.h">
-      <Filter>Archivos de encabezado\Fracturer</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\Core\FractureParameters.h">
-      <Filter>Archivos de encabezado\Graphics\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Graphics\Core\PointCloud.h">
-      <Filter>Archivos de encabezado\Graphics\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\Core\TriangleSet.h">
       <Filter>Archivos de encabezado\Graphics\Core</Filter>
     </ClInclude>
   </ItemGroup>
@@ -659,9 +626,6 @@
     <ClCompile Include="Source\Geometry\3D\TriangleMesh.cpp">
       <Filter>Archivos de origen\Geometry\3D</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Graphics\Core\PlanarSurface.cpp">
-      <Filter>Archivos de origen\Graphics\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Geometry\3D\Plane.cpp">
       <Filter>Archivos de origen\Geometry\3D</Filter>
     </ClCompile>
@@ -725,11 +689,8 @@
     <ClCompile Include="Source\Geometry\Animation\LinearInterpolation.cpp">
       <Filter>Archivos de origen\Geometry\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Graphics\Application\CADScene.cpp">
+    <ClCompile Include="Source\Graphics\Application\PointCloudScene.cpp">
       <Filter>Archivos de origen\Graphics\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\Core\CADModel.cpp">
-      <Filter>Archivos de origen\Graphics\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\Graphics\Core\SSAOFBO.cpp">
       <Filter>Archivos de origen\Graphics\Core\FBO</Filter>
@@ -776,26 +737,11 @@
     <ClCompile Include="Libraries\imgizmo\ImSequencer.cpp">
       <Filter>Archivos de origen\ImportedLibraries\imguizmo</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Graphics\Core\TriangleSet.cpp">
-      <Filter>Archivos de origen\Graphics\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\DataStructures\Octree.cpp">
-      <Filter>Archivos de origen\DataStructures</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Graphics\Core\AABBSet.cpp">
       <Filter>Archivos de origen\Graphics\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\DataStructures\RegularGrid.cpp">
       <Filter>Archivos de origen\DataStructures</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Fracturer\FloodFracturer.cpp">
-      <Filter>Archivos de origen\Fracturer</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Fracturer\NaiveFracturer.cpp">
-      <Filter>Archivos de origen\Fracturer</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Fracturer\Seeder.cpp">
-      <Filter>Archivos de origen\Fracturer</Filter>
     </ClCompile>
     <ClCompile Include="Source\Graphics\Core\PointCloud.cpp">
       <Filter>Archivos de origen\Graphics\Core</Filter>

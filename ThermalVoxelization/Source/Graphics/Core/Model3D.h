@@ -243,11 +243,6 @@ protected:
 	static void captureTexture(FBOScreenshot* fbo, const std::vector<vec4>& pixels, const uvec2& dimension, const std::string& filename);
 
 	/**
-	*	@brief Computes the tangents for a model component with an already loaded geometry and topology.
-	*/
-	virtual void computeTangents(ModelComponent* modelComp);
-
-	/**
 	*	@brief
 	*/
 	virtual void generatePointCloud();

@@ -31,12 +31,7 @@
     <ClInclude Include="Libraries\imgui\imgui_internal.h" />
     <ClInclude Include="Libraries\imgui\imstb_truetype.h" />
     <ClInclude Include="Libraries\lodepng\lodepng.h" />
-    <ClInclude Include="Source\DataStructures\Octree.h" />
     <ClInclude Include="Source\DataStructures\RegularGrid.h" />
-    <ClInclude Include="Source\Fracturer\FloodFracturer.h" />
-    <ClInclude Include="Source\Fracturer\Fracturer.h" />
-    <ClInclude Include="Source\Fracturer\NaiveFracturer.h" />
-    <ClInclude Include="Source\Fracturer\Seeder.h" />
     <ClInclude Include="Source\Geometry\2D\Vector2.h" />
     <ClInclude Include="Source\Geometry\3D\AABB.h" />
     <ClInclude Include="Source\Geometry\3D\Edge3D.h" />
@@ -55,7 +50,7 @@
     <ClInclude Include="Source\Geometry\Animation\LinearInterpolation.h" />
     <ClInclude Include="Source\Geometry\General\Adapter.h" />
     <ClInclude Include="Source\Geometry\General\BasicOperations.h" />
-    <ClInclude Include="Source\Graphics\Application\CADScene.h" />
+    <ClInclude Include="Source\Graphics\Application\PointCloudScene.h" />
     <ClInclude Include="Source\Graphics\Application\CameraManager.h" />
     <ClInclude Include="Source\Graphics\Application\GraphicsAppEnumerations.h" />
     <ClInclude Include="Source\Graphics\Application\MaterialList.h" />
@@ -67,7 +62,6 @@
     <ClInclude Include="Source\Graphics\Core\AABBSet.h" />
     <ClInclude Include="Source\Graphics\Core\AmbientLight.h" />
     <ClInclude Include="Source\Graphics\Core\BasicAttenuation.h" />
-    <ClInclude Include="Source\Graphics\Core\CADModel.h" />
     <ClInclude Include="Source\Graphics\Core\Camera.h" />
     <ClInclude Include="Source\Graphics\Core\CameraProjection.h" />
     <ClInclude Include="Source\Graphics\Core\ColorUtilities.h" />
@@ -77,7 +71,6 @@
     <ClInclude Include="Source\Graphics\Core\DrawRay3D.h" />
     <ClInclude Include="Source\Graphics\Core\FBO.h" />
     <ClInclude Include="Source\Graphics\Core\FBOScreenshot.h" />
-    <ClInclude Include="Source\Graphics\Core\FractureParameters.h" />
     <ClInclude Include="Source\Graphics\Core\GraphicsCoreEnumerations.h" />
     <ClInclude Include="Source\Graphics\Core\Group3D.h" />
     <ClInclude Include="Source\Graphics\Core\Image.h" />
@@ -90,7 +83,6 @@
     <ClInclude Include="Source\Graphics\Core\OrthoProjection.h" />
     <ClInclude Include="Source\Graphics\Core\PerspProjection.h" />
     <ClInclude Include="Source\Graphics\Core\PixarAttenuation.h" />
-    <ClInclude Include="Source\Graphics\Core\PlanarSurface.h" />
     <ClInclude Include="Source\Graphics\Core\PointCloud.h" />
     <ClInclude Include="Source\Graphics\Core\PointLight.h" />
     <ClInclude Include="Source\Graphics\Core\RangedAttenuation.h" />
@@ -102,7 +94,6 @@
     <ClInclude Include="Source\Graphics\Core\SpotLight.h" />
     <ClInclude Include="Source\Graphics\Core\SSAOFBO.h" />
     <ClInclude Include="Source\Graphics\Core\Texture.h" />
-    <ClInclude Include="Source\Graphics\Core\TriangleSet.h" />
     <ClInclude Include="Source\Graphics\Core\VAO.h" />
     <ClInclude Include="Source\Graphics\Core\ImageUtilities.h" />
     <ClInclude Include="Libraries\objloader\OBJ_Loader.h" />
@@ -194,11 +185,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Source\DataStructures\Octree.cpp" />
     <ClCompile Include="Source\DataStructures\RegularGrid.cpp" />
-    <ClCompile Include="Source\Fracturer\FloodFracturer.cpp" />
-    <ClCompile Include="Source\Fracturer\NaiveFracturer.cpp" />
-    <ClCompile Include="Source\Fracturer\Seeder.cpp" />
     <ClCompile Include="Source\Geometry\2D\Vector2.cpp" />
     <ClCompile Include="Source\Geometry\3D\AABB.cpp" />
     <ClCompile Include="Source\Geometry\3D\Edge3D.cpp" />
@@ -214,7 +201,7 @@
     <ClCompile Include="Source\Geometry\Animation\CatmullRom.cpp" />
     <ClCompile Include="Source\Geometry\Animation\Interpolation.cpp" />
     <ClCompile Include="Source\Geometry\Animation\LinearInterpolation.cpp" />
-    <ClCompile Include="Source\Graphics\Application\CADScene.cpp" />
+    <ClCompile Include="Source\Graphics\Application\PointCloudScene.cpp" />
     <ClCompile Include="Source\Graphics\Application\CameraManager.cpp" />
     <ClCompile Include="Source\Graphics\Application\MaterialList.cpp" />
     <ClCompile Include="Source\Graphics\Application\Renderer.cpp" />
@@ -224,7 +211,6 @@
     <ClCompile Include="Source\Graphics\Core\AABBSet.cpp" />
     <ClCompile Include="Source\Graphics\Core\AmbientLight.cpp" />
     <ClCompile Include="Source\Graphics\Core\BasicAttenuation.cpp" />
-    <ClCompile Include="Source\Graphics\Core\CADModel.cpp" />
     <ClCompile Include="Source\Graphics\Core\Camera.cpp" />
     <ClCompile Include="Source\Graphics\Core\ComputeShader.cpp" />
     <ClCompile Include="Source\Graphics\Core\DirectionalLight.cpp" />
@@ -241,7 +227,6 @@
     <ClCompile Include="Source\Graphics\Core\OrthoProjection.cpp" />
     <ClCompile Include="Source\Graphics\Core\PerspProjection.cpp" />
     <ClCompile Include="Source\Graphics\Core\PixarAttenuation.cpp" />
-    <ClCompile Include="Source\Graphics\Core\PlanarSurface.cpp" />
     <ClCompile Include="Source\Graphics\Core\PointCloud.cpp" />
     <ClCompile Include="Source\Graphics\Core\PointLight.cpp" />
     <ClCompile Include="Source\Graphics\Core\RangedAttenuation.cpp" />
@@ -253,7 +238,6 @@
     <ClCompile Include="Source\Graphics\Core\SpotLight.cpp" />
     <ClCompile Include="Source\Graphics\Core\SSAOFBO.cpp" />
     <ClCompile Include="Source\Graphics\Core\Texture.cpp" />
-    <ClCompile Include="Source\Graphics\Core\TriangleSet.cpp" />
     <ClCompile Include="Source\Graphics\Core\VAO.cpp" />
     <ClCompile Include="Libraries\objloader\OBJ_Loader.cpp" />
     <ClCompile Include="Source\Interface\Fonts\font_awesome.cpp" />

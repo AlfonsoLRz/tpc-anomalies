@@ -7,13 +7,9 @@
 #include "Graphics/Core/Group3D.h"
 #include "Graphics/Core/Light.h"
 #include "Graphics/Core/Model3D.h"
-#include "Graphics/Core/PlanarSurface.h"
 #include "Graphics/Core/ShaderProgram.h"
 #include "Graphics/Core/SSAOFBO.h"
-#include "Graphics/Core/TriangleSet.h"
 #include "Interface/Window.h"
-
-typedef std::vector<Group3D::StaticGPUData*> GPUDataBuffer;
 
 /**
 *	@file Scene.h
@@ -33,7 +29,6 @@ protected:
 
 	// [Groups]
 	std::vector<Group3D*>				_sceneGroup;					//!< Model wrapper
-	GPUDataBuffer						_sceneGPUData;					//!< Buffer of static GPU data objects, retrieved after building the BVH of each group
 
 	// [FBO]
 	std::vector<bool>					_computeShadowMap;				//!< Boolean value which determines if the shadow map must be computed again for a light

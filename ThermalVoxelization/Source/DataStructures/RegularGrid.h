@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Geometry/3D/AABB.h"
-#include "Graphics/Core/FractureParameters.h"
 #include "Graphics/Core/Image.h"
 #include "Graphics/Core/Model3D.h"
 #include "Graphics/Core/Texture.h"

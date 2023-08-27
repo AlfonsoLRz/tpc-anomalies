@@ -4,35 +4,8 @@
 // [Static members initialization]
 
 std::unordered_map<uint8_t, std::string> ShaderList::COMP_SHADER_SOURCE{
-		{RendEnum::ASSIGN_FACE_CLUSTER, "Assets/Shaders/Compute/Fracturer/assignFaceCluster"},
-		{RendEnum::BIT_MASK_RADIX_SORT, "Assets/Shaders/Compute/RadixSort/bitMask-radixSort"},
-		{RendEnum::BUILD_CLUSTER_BUFFER, "Assets/Shaders/Compute/BVHGeneration/buildClusterBuffer"},
-		{RendEnum::BUILD_REGULAR_GRID, "Assets/Shaders/Compute/Fracturer/buildRegularGrid"},
 		{RendEnum::BUILD_REGULAR_GRID_POINT_CLOUD, "Assets/Shaders/Compute/Fracturer/buildRegularGridPointCloud"},
-		{RendEnum::BVH_COLLISION, "Assets/Shaders/Compute/Collision/computeBVHCollision"},
-		{RendEnum::CLUSTER_MERGING, "Assets/Shaders/Compute/BVHGeneration/clusterMerging"},
-		{RendEnum::COMPUTE_FACE_AABB, "Assets/Shaders/Compute/Model/computeFaceAABB"},
-		{RendEnum::COMPUTE_GROUP_AABB, "Assets/Shaders/Compute/Group/computeGroupAABB"},
-		{RendEnum::COMPUTE_MORTON_CODES, "Assets/Shaders/Compute/BVHGeneration/computeMortonCodes"},
-		{RendEnum::COMPUTE_TANGENTS_1, "Assets/Shaders/Compute/Model/computeTangents_1"},
-		{RendEnum::COMPUTE_TANGENTS_2, "Assets/Shaders/Compute/Model/computeTangents_2"},
-		{RendEnum::DOWN_SWEEP_PREFIX_SCAN, "Assets/Shaders/Compute/PrefixScan/downSweep-prefixScan"},
-		{RendEnum::END_LOOP_COMPUTATIONS, "Assets/Shaders/Compute/BVHGeneration/endLoopComputations"},
-		{RendEnum::FIND_BEST_NEIGHBOR, "Assets/Shaders/Compute/BVHGeneration/findBestNeighbor"},
-		{RendEnum::FLOOD_FRACTURER, "Assets/Shaders/Compute/Fracturer/floodFracturer"},
 		{RendEnum::LOCATE_THERMAL_ANOMALIES_SHADER, "Assets/Shaders/Compute/Fracturer/locateThermalAnomalies" },
-		{RendEnum::MESH_BVH_COLLISION, "Assets/Shaders/Compute/Collision/computeMeshBVHCollision"},
-		{RendEnum::MODEL_APPLY_MODEL_MATRIX, "Assets/Shaders/Compute/Model/modelApplyModelMatrix"},
-		{RendEnum::MODEL_MESH_GENERATION, "Assets/Shaders/Compute/Model/modelMeshGeneration"},
-		{RendEnum::NAIVE_FRACTURER, "Assets/Shaders/Compute/Fracturer/naiveFracturer"},
-		{RendEnum::PLANAR_SURFACE_GENERATION, "Assets/Shaders/Compute/PlanarSurface/planarSurfaceGeometryTopology"},
-		{RendEnum::PLANAR_SURFACE_TOPOLOGY, "Assets/Shaders/Compute/PlanarSurface/planarSurfaceFaces"},
-		{RendEnum::REALLOCATE_CLUSTERS, "Assets/Shaders/Compute/BVHGeneration/reallocateClusters"},
-		{RendEnum::REALLOCATE_RADIX_SORT, "Assets/Shaders/Compute/RadixSort/reallocateIndices-radixSort"},
-		{RendEnum::REDUCE_PREFIX_SCAN, "Assets/Shaders/Compute/PrefixScan/reduce-prefixScan"},
-		{RendEnum::REMOVE_ISOLATED_REGIONS, "Assets/Shaders/Compute/Fracturer/removeIsolatedRegions"},
-		{RendEnum::RESET_BUFFER_INDEX, "Assets/Shaders/Compute/Generic/resetBufferIndex"},
-		{RendEnum::RESET_LAST_POSITION_PREFIX_SCAN, "Assets/Shaders/Compute/PrefixScan/resetLastPosition-prefixScan"},
 };
 
 std::unordered_map<uint8_t, std::string> ShaderList::REND_SHADER_SOURCE {

@@ -80,12 +80,12 @@ bool PointCloud::loadModelFromPLY(const mat4& modelMatrix)
 	std::shared_ptr<tinyply::PlyData> plyPoints, plyColors, plyThermals;
 	unsigned baseIndex;
 	float* pointsRaw;
-	uint8_t* colorsRaw, *thermalsRaw;
+	uint8_t* colorsRaw, *tempRaw;
 
 	try
 	{
 		const std::string filename = _filename + PLY_EXTENSION;
-		bool containsThermal = true;
+		bool hasTemperature = true;
 		fileStream.reset(new std::ifstream(filename, std::ios::binary));
 
 		if (!fileStream || fileStream->fail()) return false;
@@ -103,8 +103,8 @@ bool PointCloud::loadModelFromPLY(const mat4& modelMatrix)
 		try { plyColors = file.request_properties_from_element("vertex", { "red", "green", "blue" }); }
 		catch (const std::exception& e) { std::cerr << "tinyply exception: " << e.what() << std::endl; }
 
-		//try { plyThermals = file.request_properties_from_element("vertex", { "thermal_red", "thermal_green", "thermal_blue" }); }
-		//catch (const std::exception& e) { containsThermal = false; }
+		try { plyThermals = file.request_properties_from_element("vertex", { "temperature" }); }
+		catch (const std::exception& e) { hasTemperature = false; }
 
 		file.read(*fileStream);
 
@@ -119,17 +119,21 @@ bool PointCloud::loadModelFromPLY(const mat4& modelMatrix)
 			_points.resize(numPoints); _rgb.resize(numPoints); _thermal.resize(numPoints);
 			pointsRaw = new float[numPoints * 3];
 			colorsRaw = new uint8_t[numColors * 3];
-			thermalsRaw = (uint8_t*) std::calloc(numPoints * 3, sizeof(uint8_t));
 
 			std::memcpy(pointsRaw, plyPoints->buffer.get(), numPointsBytes);
 			std::memcpy(colorsRaw, plyColors->buffer.get(), numColorsBytes);
 
-			if (containsThermal)
+			if (hasTemperature)
 			{
-				//const size_t numThermalValues = plyThermals->count;
-				//const size_t numThermalValuesBytes = numThermalValues * 1 * 3;
+				const size_t numThermalValues = plyThermals->count;
+				const size_t numThermalValuesBytes = numThermalValues * 1 * 3;
 
-				//std::memcpy(thermalsRaw, plyThermals->buffer.get(), numThermalValuesBytes);
+				tempRaw = new uint8_t[numPoints * 3];
+				std::memcpy(tempRaw, plyThermals->buffer.get(), numThermalValuesBytes);
+			}
+			else
+			{
+				tempRaw = colorsRaw;
 			}
 
 			for (unsigned ind = 0; ind < numPoints; ++ind)
@@ -138,9 +142,13 @@ bool PointCloud::loadModelFromPLY(const mat4& modelMatrix)
 
 				_points[ind] = vec4(pointsRaw[baseIndex], pointsRaw[baseIndex + 2], pointsRaw[baseIndex + 1], 1.0f);
 				_rgb[ind] = vec3(colorsRaw[baseIndex] / 255.0f, colorsRaw[baseIndex + 1] / 255.0f, colorsRaw[baseIndex + 2] / 255.0f);
-				_thermal[ind] = float(colorsRaw[baseIndex] / 255.0f);
+				_thermal[ind] = float(tempRaw[baseIndex] / 255.0f);
 				_aabb.update(vec3(_points[ind]));
 			}
+
+			delete[] pointsRaw;
+			delete[] colorsRaw;
+			if (hasTemperature) delete[] tempRaw;
 		}
 	}
 	catch (const std::exception& e)

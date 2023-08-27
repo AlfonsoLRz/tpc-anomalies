@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Graphics/Application/Scene.h"
-#include "Graphics/Core/CADModel.h"
 #include "Graphics/Core/DrawAABB.h"
 #include "Graphics/Core/DrawRay3D.h"
 #include "Graphics/Core/Model3D.h"
@@ -28,13 +27,6 @@ protected:
 	*	@return False if any point cloud or wireframe scene must be rendered.
 	*/
 	bool needToApplyAmbientOcclusion(RenderingParameters* rendParams);
-
-	/**
-	*	@brief Renders other data structures related to a LiDAR scene.
-	*	@param mModel Additional model matrix to be applied over the initial model matrix.
-	*	@param rendParams Rendering parameters to be taken into account.
-	*/
-	void renderOtherStructures(const mat4& mModel, RenderingParameters* rendParams);
 
 	/**
 	*	@brief Renders the scene without any post-processing efect.
@@ -71,18 +63,6 @@ protected:
 	*	@param rendParams Rendering parameters to be taken into account.
 	*/
 	virtual void renderUniformPointCloud(const mat4& mModel, RenderingParameters* rendParams);
-
-	// --------------- Other secondary structures ----------------------
-	
-	/**
-	*	@brief Renders BVH tree built by room group.
-	*/
-	void renderBVH(const mat4& model, RenderingParameters* rendParams);
-
-	/**
-	*	@brief Renders the scene normals through a geometry shader.
-	*/
-	void renderVertexNormals(const mat4& model, RenderingParameters* rendParams);
 
 	// -------------- Draw scene -------------
 

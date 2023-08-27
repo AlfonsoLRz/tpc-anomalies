@@ -258,38 +258,6 @@ void Model3D::captureTexture(FBOScreenshot* fbo, const std::vector<vec4>& pixels
 	delete tex;
 }
 
-void Model3D::computeTangents(ModelComponent* modelComp)
-{
-	ComputeShader* shader	= ShaderList::getInstance()->getComputeShader(RendEnum::COMPUTE_TANGENTS_1);
-	const int numVertices	= modelComp->_geometry.size(), numTriangles = modelComp->_topology.size();
-	int numGroups			= ComputeShader::getNumGroups(numTriangles);
-
-	GLuint geometryBufferID, meshBufferID, outBufferID;
-	geometryBufferID	= ComputeShader::setReadBuffer(modelComp->_geometry);
-	meshBufferID		= ComputeShader::setReadBuffer(modelComp->_topology);
-	outBufferID			= ComputeShader::setWriteBuffer(vec4(), numVertices);
-
-	shader->bindBuffers(std::vector<GLuint> { geometryBufferID, meshBufferID, outBufferID });
-	shader->use();
-	shader->setUniform("numTriangles", numTriangles);
-	shader->execute(numGroups, 1, 1, ComputeShader::getMaxGroupSize(), 1, 1);
-
-	shader = ShaderList::getInstance()->getComputeShader(RendEnum::COMPUTE_TANGENTS_2);
-	numGroups = ComputeShader::getNumGroups(numVertices);
-
-	shader->bindBuffers(std::vector<GLuint> { geometryBufferID, outBufferID });
-	shader->use();
-	shader->setUniform("numVertices", numVertices);
-	shader->execute(numGroups, 1, 1, ComputeShader::getMaxGroupSize(), 1, 1);
-
-	VertexGPUData* data		= ComputeShader::readData(geometryBufferID, VertexGPUData());
-	modelComp->_geometry	= std::move(std::vector<VertexGPUData>(data, data + numVertices));
-
-	glDeleteBuffers(1, &geometryBufferID);
-	glDeleteBuffers(1, &meshBufferID);
-	glDeleteBuffers(1, &outBufferID);
-}
-
 void Model3D::generatePointCloud()
 {
 	for (ModelComponent* modelComp : _modelComp)

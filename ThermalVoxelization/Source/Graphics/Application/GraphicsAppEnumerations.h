@@ -15,27 +15,14 @@ struct CGAppEnum
 	enum VisualizationModes : uint8_t
 	{
 		VIS_POINTS,
-		VIS_LINES,
 		VIS_TRIANGLES,
 		VIS_ALL_TOGETHER
-	};
-
-	// Drawable scenes
-	enum SceneNames : uint8_t
-	{
-		BIM_SCENE
 	};
 
 	/**
 	*	@return Number of different visualization modes.
 	*/
 	const static GLsizei numVisualizationModes() { return VIS_ALL_TOGETHER + 1; }
-
-	/**
-	*	@return Number of drawable scenes.
-	*/
-	const static GLsizei numAvailableScenes() { return BIM_SCENE + 1; }
-
 
 	// Application prebuilt materials
 	enum MaterialNames : uint16_t

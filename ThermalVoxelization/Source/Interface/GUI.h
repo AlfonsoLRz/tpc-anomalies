@@ -5,7 +5,7 @@
 #include "imgui/examples/imgui_impl_opengl3.h"
 
 #include "Geometry/Animation/CatmullRom.h"
-#include "Graphics/Application/CADScene.h"
+#include "Graphics/Application/PointCloudScene.h"
 #include "Graphics/Application/Renderer.h"
 #include "Graphics/Application/RenderingParameters.h"
 #include "imgizmo/ImGuizmo.h"
@@ -30,10 +30,9 @@ protected:
 	ModelComponentBuffer			_modelComponents;					//!< Model component active on the scene
 	Renderer*						_renderer;							//!< Access to current scene
 	RenderingParameters*			_renderingParams;					//!< Reference to rendering parameters
-	CADScene*						_scene;
+	PointCloudScene*				_scene;
 
 	// GUI state
-	bool							_showAboutUs;						//!< About us window
 	bool							_showControls;						//!< Shows application controls
 	bool							_showGridSettings;					//!< Regular grid window
 	bool							_showRenderingSettings;				//!< Displays a window which allows the user to modify the rendering parameters
@@ -72,11 +71,6 @@ protected:
 	static void renderHelpMarker(const char* message);
 
 	/**
-	*	@brief Shows a window where some information about the project is displayed.
-	*/
-	void showAboutUsWindow();
-
-	/**
 	*	@brief Displays a table with the application controls (mouse, keyboard, etc).
 	*/
 	void showControls();
@@ -90,11 +84,6 @@ protected:
 	*	@brief Shows a window with general rendering configuration.
 	*/
 	void showRenderingSettings();
-
-	/**
-	*	@brief Shows a list of models in the scene which can be modified.
-	*/
-	void showSceneSettings();
 
 	/**
 	*	@brief Shows a window with framebuffer and screenshot configuration.

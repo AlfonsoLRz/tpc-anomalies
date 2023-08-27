@@ -9,11 +9,11 @@
 /// [Protected methods]
 
 GUI::GUI() :
-	_showRenderingSettings(false), _showSceneSettings(false), _showScreenshotSettings(false), _showAboutUs(false), _showControls(false), _showGridSettings(false)
+	_showRenderingSettings(false), _showSceneSettings(false), _showScreenshotSettings(false), _showControls(false), _showGridSettings(false)
 {
 	_renderer			= Renderer::getInstance();	
 	_renderingParams	= Renderer::getInstance()->getRenderingParameters();
-	_scene				= dynamic_cast<CADScene*>(_renderer->getCurrentScene());
+	_scene				= dynamic_cast<PointCloudScene*>(_renderer->getCurrentScene());
 }
 
 void GUI::createMenu()
@@ -22,9 +22,7 @@ void GUI::createMenu()
 
 	if (_showRenderingSettings)		showRenderingSettings();
 	if (_showScreenshotSettings)	showScreenshotSettings();
-	if (_showSceneSettings)			showSceneSettings();
 	if (_showGridSettings)			showGridSettings();
-	if (_showAboutUs)				showAboutUsWindow();
 	if (_showControls)				showControls();
 
 	if (ImGui::BeginMainMenuBar())
@@ -33,14 +31,12 @@ void GUI::createMenu()
 		{
 			ImGui::MenuItem(ICON_FA_CUBE "Rendering", NULL, &_showRenderingSettings);
 			ImGui::MenuItem(ICON_FA_IMAGE "Screenshot", NULL, &_showScreenshotSettings);
-			ImGui::MenuItem(ICON_FA_TREE "Scene", NULL, &_showSceneSettings);
 			ImGui::MenuItem(ICON_FA_CUBES "Grid", NULL, &_showGridSettings);
 			ImGui::EndMenu();
 		}
 
 		if (ImGui::BeginMenu(ICON_FA_QUESTION_CIRCLE "Help"))
 		{
-			ImGui::MenuItem(ICON_FA_INFO "About the project", NULL, &_showAboutUs);
 			ImGui::MenuItem(ICON_FA_GAMEPAD "Controls", NULL, &_showControls);
 			ImGui::EndMenu();
 		}
@@ -75,16 +71,6 @@ void GUI::renderHelpMarker(const char* message)
 	}
 }
 
-void GUI::showAboutUsWindow()
-{
-	if (ImGui::Begin("About the project", &_showAboutUs))
-	{
-		ImGui::Text("This code belongs to a research project from University of Jaen (GGGJ group).");	
-	}
-
-	ImGui::End();
-}
-
 void GUI::showControls()
 {
 	if (ImGui::Begin("Scene controls", &_showControls))
@@ -117,14 +103,13 @@ void GUI::showGridSettings()
 {
 	if (ImGui::Begin("Fracture Settings", &_showGridSettings))
 	{
-		this->leaveSpace(1);
-		
-		this->leaveSpace(2); ImGui::Text("Algorithm Settings"); ImGui::Separator(); this->leaveSpace(2);	
-		ImGui::SliderInt3("Grid Subdivisions", &_renderingParams->_gridSubdivisions[0], 1, 500); ImGui::SameLine(0, 20);
 		if (ImGui::Button("Rebuild Grid"))
 		{
 			_scene->rebuildGrid(_renderingParams->_gridSubdivisions);
 		}
+
+		this->leaveSpace(2); ImGui::Text("Algorithm Settings"); ImGui::Separator(); this->leaveSpace(2);	
+		ImGui::SliderInt3("Grid Subdivisions", &_renderingParams->_gridSubdivisions[0], 1, 500); ImGui::SameLine(0, 20);
 		ImGui::Checkbox("Fill columns", &_renderingParams->_fillUnderVoxels);
 
 		this->leaveSpace(3); ImGui::Text("Thermal Anomalies"); ImGui::Separator(); this->leaveSpace(2);
@@ -133,12 +118,6 @@ void GUI::showGridSettings()
 
 		this->leaveSpace(3); ImGui::Text("Execution Settings"); ImGui::Separator(); this->leaveSpace(2);
 		ImGui::Checkbox("Use GPU", &_renderingParams->_launchGridGPU); ImGui::SameLine(0, 20);
-
-		this->leaveSpace(3); ImGui::Text("Save Result"); ImGui::Separator(); this->leaveSpace(2);
-		if (ImGui::Button("Export Fragments"))
-		{
-			_scene->exportGrid(_renderingParams->_fillUnderVoxels);
-		}
 	}
 
 	ImGui::End();
@@ -168,52 +147,18 @@ void GUI::showRenderingSettings()
 				ImGui::Separator();
 				ImGui::Text(ICON_FA_TREE "Scenario");
 
-				ImGui::Checkbox("Render scenario", &_renderingParams->_showTriangleMesh);
+				const char* visualizationTitles[] = { "Points", "Triangles", "All" };
+				ImGui::Combo("Visualization", &_renderingParams->_visualizationMode, visualizationTitles, IM_ARRAYSIZE(visualizationTitles));
 
 				{
 					ImGui::Spacing();
 
-					ImGui::NewLine();
-					ImGui::SameLine(30, 0);
-					ImGui::Checkbox("Voxelized", &_renderingParams->_renderVoxelizedMesh);
-
-					ImGui::NewLine();
-					ImGui::SameLine(30, 0);
-					ImGui::Checkbox("Screen Space Ambient Occlusion", &_renderingParams->_ambientOcclusion);
-
 					if (_renderingParams->_visualizationMode == CGAppEnum::VIS_TRIANGLES)
 					{
-						ImGui::NewLine();
-						ImGui::SameLine(30, 0);
-						ImGui::Checkbox("Render Thermal Values", &_renderingParams->_renderThermals);
-						ImGui::Checkbox("Render Anomalies", &_renderingParams->_renderAnomalies);
+						ImGui::Checkbox("Render thermal values", &_renderingParams->_renderThermals);
+						ImGui::Checkbox("Render anomalies", &_renderingParams->_renderAnomalies);
 					}
-
-					const char* visualizationTitles[] = { "Points", "Lines", "Triangles", "All" };
-					ImGui::NewLine();
-					ImGui::SameLine(30, 0);
-					ImGui::Combo("Visualization", &_renderingParams->_visualizationMode, visualizationTitles, IM_ARRAYSIZE(visualizationTitles));
 				}
-
-				ImGui::EndTabItem();
-			}
-
-			if (ImGui::BeginTabItem("Data Structures"))
-			{
-				this->leaveSpace(1);
-
-				ImGui::Checkbox("Render BVH", &_renderingParams->_showBVH);
-
-				{
-					this->leaveSpace(1);
-					ImGui::NewLine(); ImGui::SameLine(0, 22);
-					ImGui::ColorEdit3("BVH color", &_renderingParams->_bvhWireframeColor[0]);
-					ImGui::NewLine(); ImGui::SameLine(0, 22);
-					ImGui::SliderFloat("BVH nodes", &_renderingParams->_bvhNodesPercentage, 0.0f, 1.0f);
-					this->leaveSpace(2);
-				}
-
-				this->leaveSpace(1);
 
 				ImGui::EndTabItem();
 			}
@@ -223,67 +168,12 @@ void GUI::showRenderingSettings()
 				this->leaveSpace(1);
 
 				ImGui::SliderFloat("Point Size", &_renderingParams->_scenePointSize, 0.1f, 50.0f);
-				ImGui::ColorEdit3("Point Cloud Color", &_renderingParams->_scenePointCloudColor[0]);
-
-				ImGui::EndTabItem();
-			}
-
-			if (ImGui::BeginTabItem("Wireframe"))
-			{
-				this->leaveSpace(1);
-
-				ImGui::ColorEdit3("Wireframe Color", &_renderingParams->_wireframeColor[0]);
-				ImGui::Checkbox("Render Scene Normals", &_renderingParams->_showVertexNormal);
-				ImGui::SameLine(0, 20); ImGui::PushItemWidth(150.0f);  ImGui::SliderFloat("Normal Length", &_renderingParams->_normalLength, .1f, 10.0f); ImGui::PopItemWidth();
 
 				ImGui::EndTabItem();
 			}
 
 			ImGui::EndTabBar();
 		}
-	}
-
-	ImGui::End();
-}
-
-void GUI::showSceneSettings()
-{
-	if (_modelComponents.empty()) _modelComponents = _renderer->getCurrentScene()->getModelComponents();
-	
-	ImGui::SetNextWindowSize(ImVec2(480, 440), ImGuiCond_FirstUseEver);
-
-	if (ImGui::Begin("Scene Models", &_showSceneSettings, ImGuiWindowFlags_None))
-	{
-		this->leaveSpace(4);
-
-		// Left
-		static int modelCompSelected = 0;
-
-		ImGui::BeginChild("Model Components", ImVec2(200, 0), true);
-
-		for (int i = 0; i < _modelComponents.size(); ++i)
-		{
-			if (ImGui::Selectable(_modelComponents[i]->_name.c_str(), modelCompSelected == i))
-				modelCompSelected = i;
-		}
-
-		ImGui::EndChild();
-
-		ImGui::SameLine();
-
-		// Right
-		ImGui::BeginGroup();
-		ImGui::BeginChild("Model Component View", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()));		// Leave room for 1 line below us
-
-		ImGui::Text(_modelComponents[modelCompSelected]->_name.c_str());
-		ImGui::Separator();
-
-		this->leaveSpace(1);
-				
-		ImGui::Checkbox("Enabled", &_modelComponents[modelCompSelected]->_enabled);
-
-		ImGui::EndChild();
-		ImGui::EndGroup();
 	}
 
 	ImGui::End();

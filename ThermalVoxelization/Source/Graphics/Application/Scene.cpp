@@ -15,7 +15,6 @@ Scene::Scene():
 Scene::~Scene()
 {
 	for (Group3D* group : _sceneGroup) delete group;
-	for (Group3D::StaticGPUData* staticData : _sceneGPUData) delete staticData;
 	
 	delete _ssaoFBO;
 }
