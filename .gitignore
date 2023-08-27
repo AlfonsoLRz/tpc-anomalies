@@ -38,6 +38,7 @@
 
 # Visual Studio	
 .vs/*
-MeshFragments/Debug/*
-MeshFragments/Release/*
-MeshFragments/x64/*
+tpc-anomalies/Debug/*
+tpc-anomalies/Release/*
+tpc-anomalies/x64/*
+x64/*
