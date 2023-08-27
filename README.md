@@ -17,7 +17,9 @@ This repository is intended for the search of anomalies in archaeological sites,
 
 You can find the executable file in the Release tab of Github. This version was generated under a Windows 10 System (64 bits) using Microsoft Visual Studio.
 
-## Input thermal point cloud
+## Get started
+
+### Input thermal point cloud
 
 The current project only supports `.ply` point clouds, which must adjust to the following scheme:
 - Root element: `vertex`.
@@ -27,7 +29,7 @@ The current project only supports `.ply` point clouds, which must adjust to the 
 
 The read point cloud must be located at `Assets/PointCloud/ThermalPointCloud.ply`.
 
-## Runtime parameters
+### Runtime parameters
 
 The published project is able to recalculate the voxelization and calculate new anomalies according to a neighborhood size and a $\sigma$ threshold to adjust the sensitivity of the pipeline. Note that, by default, no anomalies are displayed until they are calculated once. To this end, please click the `Rebuild grid` button, which computes the regular grid as well as the outlier voxels.
 
