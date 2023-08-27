@@ -13,6 +13,9 @@ This repository is intended for the search of anomalies in archaeological sites,
     <img src="readme_assets/VoxelAnomalies.png" width=800/></br>
 </p>
 
+## Downloads
+
+You can find the executable file in the Release tab of Github. This version was generated under a Windows 10 System (64 bits) using Microsoft Visual Studio.
 
 ## Input thermal point cloud
 
@@ -20,7 +23,7 @@ The current project only supports `.ply` point clouds, which must adjust to the 
 - Root element: `vertex`.
     - Position: `x`, `y`, `z`.
     - Color: `red`, `green`, `blue`, encoding a grayscale thermal representation in a `vec3`.
-    - Temperature: `temperature` [Optional]. If this field cannot be found, the temperature will be retrieved from the `red` channel.
+    - Temperature: `temperature` **[Optional]**. If this field cannot be found, the temperature will be retrieved from the `red` channel.
 
 The read point cloud must be located at `Assets/PointCloud/ThermalPointCloud.ply`.
 
@@ -28,7 +31,7 @@ The read point cloud must be located at `Assets/PointCloud/ThermalPointCloud.ply
 
 The published project is able to recalculate the voxelization and calculate new anomalies according to a neighborhood size and a $\sigma$ threshold to adjust the sensitivity of the pipeline. Note that, by default, no anomalies are displayed until they are calculated once. To this end, please click the `Rebuild grid` button, which computes the regular grid as well as the outlier voxels.
 
-The following image shows a screenshot of the Graphical User Interface (GUI) that enable setting all these parameters.
+The following image shows a screenshot of the Graphical User Interface (GUI) that enables setting all these parameters.
 
 <p align="center">
     <img src="readme_assets/GUI.PNG" width=800/></br>
