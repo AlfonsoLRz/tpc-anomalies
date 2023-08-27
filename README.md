@@ -7,7 +7,12 @@
 
 Voxelization of thermal point clouds in OpenGL, using compute shaders, to render anomalous voxels according to their temperature in contrast to their neighbourhood.
 
-    This repository is intended for the search of anomalies in archaeological sites, accompanying our work 'Detection of landscape features with visible and thermal imaging at the Castle of Puerta Arenas', 2023, Archaeological and Anthropological Sciences, Carolina Collaro, Carmen Enríquez‑Muñoz, Alfonso, López‑Ruiz, Carlos Enríquez & Juan‑Manuel Jurado‑Rodríguez.
+>This repository is intended for the search of anomalies in archaeological sites, accompanying our work '**Detection of landscape features with visible and thermal imaging at the Castle of Puerta Arenas**', 2023, Archaeological and Anthropological Sciences, Carolina Collaro, Carmen Enríquez‑Muñoz, Alfonso, López‑Ruiz, Carlos Enríquez & Juan‑Manuel Jurado‑Rodríguez.
+
+<p align="center">
+    <img src="readme_assets/VoxelAnomalies.PNG" width=800/></br>
+</p>
+
 
 ## Input thermal point cloud
 
