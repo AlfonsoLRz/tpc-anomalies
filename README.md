@@ -1,4 +1,4 @@
-# Detection of anomalies in thermal point clouds
+# Detection of thermal anomalies in point clouds
 
 ![c++](https://img.shields.io/github/languages/top/AlfonsoLRz/tpc-anomalies) 
 ![opengl](https://img.shields.io/badge/opengl-4.5-red.svg) 
