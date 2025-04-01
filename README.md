@@ -58,3 +58,22 @@ Finally, once the $\sigma$ and number of neighbors are configured, voxels can be
     <img src="readme_assets/Anomalies.PNG" width=800 /></br>
     <em>Anomalies detected over the previous voxelization.</em>
 </p>
+
+## How to cite
+
+    @article{collaro_detection_2023,
+    	title = {Detection of landscape features with visible and thermal imaging at the {Castle} of {Puerta} {Arenas}},
+    	volume = {15},
+    	issn = {1866-9565},
+    	url = {https://doi.org/10.1007/s12520-023-01831-3},
+    	doi = {10.1007/s12520-023-01831-3},
+    	language = {en},
+    	number = {10},
+    	urldate = {2023-12-31},
+    	journal = {Archaeological and Anthropological Sciences},
+    	author = {Collaro, Carolina and Enríquez-Muñoz, Carmen and López, Alfonso and Enríquez, Carlos and Jurado, Juan M.},
+    	month = sep,
+    	year = {2023},
+    	keywords = {Photogrammetry, Structure from motion, Archaeology, Thermography, Unmanned aerial systems},
+    	pages = {152}
+    }
