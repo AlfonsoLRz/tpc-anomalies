@@ -8,7 +8,7 @@
 Voxelization of thermal point clouds in OpenGL, using compute shaders, to visualize anomalous voxels according to their temperature in contrast to their neighbourhood.
 
 <p align="center">
-    <img src="readme_assets/VoxelAnomalies.png" width=600/></br>
+    <img src="readme_assets/VoxelAnomalies.png" style="width:60%;"/></br>
 </p>
 
 ## Downloads
@@ -53,7 +53,7 @@ The search of thermal anomalies starts by indexing the point cloud into a regula
 Finally, once the $\sigma$ and number of neighbours are configured, voxels can be rendered according to whether they have been identified as outliers.
 
 <p align="center">
-    <img src="readme_assets/Anomalies.PNG" width=800 /></br>
+    <img src="readme_assets/Anomalies.PNG" style="width:60%;"/></br>
     <em>Anomalies detected over the previous voxelization.</em>
 </p>
 
